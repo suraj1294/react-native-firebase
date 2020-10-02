@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Home } from "./screens/home";
 import { AppState } from "./store/appState";
 import { Login } from "./screens/Authentication";
-import { authenticationInitialState } from "./store/reducers/Authentication";
+import { authenticationInitialState } from "./store/reducers/authentication";
 
 const Stack = createStackNavigator();
 

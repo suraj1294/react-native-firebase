@@ -1,1 +1,4 @@
-export { default as AuthReducer } from "./Authentication";
+export {
+  default as authentication,
+  authenticationInitialState,
+} from "./authentication";

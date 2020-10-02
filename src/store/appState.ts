@@ -1,4 +1,4 @@
-import { authenticationInitialState } from "./reducers/Authentication";
+import { authenticationInitialState } from "./reducers";
 
 export const appInitialState = {
   authentication: authenticationInitialState,
