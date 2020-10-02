@@ -1,15 +1,15 @@
-import { Reducer } from "react";
+import { Reducer } from "redux";
 import { AuthenticationActions } from "../actions";
 import { AuthenticationState } from "../models";
 
-const initialState: AuthenticationState = {
+export const authenticationInitialState: AuthenticationState = {
   isLogged: false,
 };
 
 const AuthReducer: Reducer<AuthenticationState, AuthenticationActions> = (
-  state = initialState,
+  state = authenticationInitialState,
   action
-) => {
+): AuthenticationState => {
   switch (action.type) {
     case "Authentication/SET_LOGIN":
       return {

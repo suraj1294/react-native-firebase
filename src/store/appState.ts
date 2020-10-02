@@ -1,5 +1,7 @@
-import { AuthenticationState } from "./models";
+import { authenticationInitialState } from "./reducers/Authentication";
 
-export interface AppState {
-  AuthenticationState: AuthenticationState;
-}
+export const appInitialState = {
+  authentication: authenticationInitialState,
+};
+
+export type AppState = typeof appInitialState;

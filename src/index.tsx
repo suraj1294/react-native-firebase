@@ -6,15 +6,17 @@ import { useSelector } from "react-redux";
 import { Home } from "./screens/home";
 import { AppState } from "./store/appState";
 import { Login } from "./screens/Authentication";
+import { authenticationInitialState } from "./store/reducers/Authentication";
 
 const Stack = createStackNavigator();
 
 interface Props {}
 
 const AppStart = (props: Props) => {
-  const { isLogged } = useSelector(
-    (state: AppState) => state.AuthenticationState
+  const { isLogged } = useSelector<AppState, typeof authenticationInitialState>(
+    (state) => state.authentication
   );
+  console.log(isLogged);
   if (!isLogged) return <Login />;
   return (
     <NavigationContainer>
