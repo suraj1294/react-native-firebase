@@ -1,4 +1,5 @@
 import React, { FC, useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   Input,
@@ -7,31 +8,51 @@ import {
   Text,
   Container,
   Content,
+  Spinner,
 } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Formik, FormikValues } from "formik";
 import { SCREEN_HEIGHT } from "../../utils/constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { signInWith } from "../../services/authentication";
+import { getErrorMessage } from "../../firebase/util";
+import {
+  setAuthUser,
+  setLoginStatus,
+} from "../../store/actions/authentication";
+import { authenticationInitialState } from "../../store/reducers";
+import { AppState } from "../../store/appState";
 
 interface LoginForm {
   userName: string;
   password: string;
 }
-interface LoginScreenProps {
-  onLogin?: () => void;
-}
+interface LoginScreenProps {}
 
-const Login: FC<LoginScreenProps> = ({ onLogin }) => {
+const Login: FC<LoginScreenProps> = () => {
+  const dispatch = useDispatch();
+  const { isLogging } = useSelector<
+    AppState,
+    typeof authenticationInitialState
+  >((state) => state.authentication);
   const [showPass, setShowPass] = useState(false);
   const initialValues: LoginForm = { userName: "", password: "" };
 
-  const handleSubmit = useCallback(
-    (values: FormikValues) => {
-      if (onLogin) onLogin();
-    },
-    [onLogin]
-  );
+  const handleSubmit = useCallback(async (values: FormikValues | LoginForm) => {
+    try {
+      dispatch(setLoginStatus(true));
+      const user = await signInWith({
+        email: values.userName,
+        password: values.password,
+      });
+      dispatch(setLoginStatus(false));
+      dispatch(setAuthUser(user));
+    } catch (e) {
+      dispatch(setLoginStatus(false));
+      console.log(getErrorMessage("AUTH", e));
+    }
+  }, []);
 
   return (
     <Container style={{ top: 50, height: 0.61 * SCREEN_HEIGHT }}>
@@ -98,15 +119,19 @@ const Login: FC<LoginScreenProps> = ({ onLogin }) => {
                   )}
                 </TouchableOpacity>
               </Item>
-              <Button
-                rounded
-                full
-                bordered
-                style={{ top: 20, borderRadius: 20 }}
-                onPress={handleSubmit}
-              >
-                <Text>Sign In</Text>
-              </Button>
+              {!isLogging ? (
+                <Button
+                  rounded
+                  full
+                  bordered
+                  style={{ top: 20, borderRadius: 20 }}
+                  onPress={handleSubmit}
+                >
+                  <Text>Sign In</Text>
+                </Button>
+              ) : (
+                <Spinner color="gray" />
+              )}
             </Form>
           )}
         </Formik>

@@ -1,3 +1,5 @@
+import firebase from "firebase";
 export interface AuthenticationState {
-  isLogged: boolean;
+  isLogging: boolean;
+  user: firebase.User | undefined | null;
 }

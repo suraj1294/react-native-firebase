@@ -1,16 +1,27 @@
 import { Action } from "redux";
+import firebase from "firebase";
 
-export const SET_LOGIN = "Authentication/SET_LOGIN";
-
-interface SetAuthenticationActions extends Action<typeof SET_LOGIN> {
-  isLogged: boolean;
+/** Action:- Set Login Status */
+const SET_LOGIN_STATUS = "Authentication/SET_LOGIN_STATUS";
+interface SetLoginStatusAction extends Action<typeof SET_LOGIN_STATUS> {
+  isLogging: boolean;
 }
-
-export const setLogin = (isLogged: boolean): SetAuthenticationActions => {
+export const setLoginStatus = (isLogging: boolean): SetLoginStatusAction => {
   return {
-    type: "Authentication/SET_LOGIN",
-    isLogged,
+    type: "Authentication/SET_LOGIN_STATUS",
+    isLogging,
   };
 };
 
-export type AuthenticationActions = SetAuthenticationActions;
+/** Action:- Set Auth Status */
+interface SetAuthUserAction extends Action<typeof SET_AUTH_USER> {
+  user: firebase.User | null;
+}
+const SET_AUTH_USER = "Authentication/SET_AUTH_USER";
+export const setAuthUser = (user: firebase.User | null): SetAuthUserAction => {
+  return {
+    type: "Authentication/SET_AUTH_USER",
+    user,
+  };
+};
+export type AuthenticationActions = SetLoginStatusAction | SetAuthUserAction;
