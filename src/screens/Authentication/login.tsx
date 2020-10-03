@@ -23,6 +23,8 @@ import {
 } from "../../store/actions/authentication";
 import { authenticationInitialState } from "../../store/reducers";
 import { AppState } from "../../store/appState";
+import { View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 interface LoginForm {
   userName: string;
@@ -31,6 +33,7 @@ interface LoginForm {
 interface LoginScreenProps {}
 
 const Login: FC<LoginScreenProps> = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const { isLogging } = useSelector<
     AppState,
@@ -55,7 +58,12 @@ const Login: FC<LoginScreenProps> = () => {
   }, []);
 
   return (
-    <Container style={{ top: 50, height: 0.61 * SCREEN_HEIGHT }}>
+    <Container
+      style={{
+        paddingTop: 30,
+        height: 0.61 * SCREEN_HEIGHT,
+      }}
+    >
       <Content style={{ marginHorizontal: 20 }}>
         <Text
           style={{
@@ -65,7 +73,7 @@ const Login: FC<LoginScreenProps> = () => {
             marginVertical: 20,
           }}
         >
-          Log In
+          LOG IN
         </Text>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -78,12 +86,12 @@ const Login: FC<LoginScreenProps> = () => {
                   color="black"
                 />
                 <Input
-                  placeholder="Username"
+                  placeholder="Email"
                   placeholderTextColor="gray"
                   onChangeText={handleChange("userName")}
                   onBlur={handleBlur("userName")}
                   value={values.userName}
-                  label="username"
+                  label="Email"
                 />
               </Item>
               <Item rounded style={{ marginTop: 20 }}>
@@ -119,19 +127,57 @@ const Login: FC<LoginScreenProps> = () => {
                   )}
                 </TouchableOpacity>
               </Item>
+              <View
+                style={{
+                  paddingTop: 5,
+
+                  alignItems: "flex-end",
+                }}
+              >
+                <TouchableOpacity onPress={() => navigation.navigate("Forgot")}>
+                  <Text
+                    style={{
+                      color: "gray",
+                      borderBottomColor: "gray",
+                      borderBottomWidth: 1,
+                      marginRight: 10,
+                    }}
+                  >
+                    forgot password?
+                  </Text>
+                </TouchableOpacity>
+              </View>
               {!isLogging ? (
                 <Button
                   rounded
                   full
-                  bordered
-                  style={{ top: 20, borderRadius: 20 }}
+                  style={{ marginTop: 10, borderRadius: 20 }}
                   onPress={handleSubmit}
+                  color="#4F6DE5"
                 >
-                  <Text>Sign In</Text>
+                  <Text>SIGN IN</Text>
                 </Button>
               ) : (
                 <Spinner color="gray" />
               )}
+
+              <View
+                style={{
+                  marginTop: 10,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
+                <View style={{ justifyContent: "center" }}>
+                  <Text style={{ color: "gray" }}>Don't have an account?</Text>
+                </View>
+                <Button
+                  transparent
+                  onPress={() => navigation.navigate("SignUp")}
+                >
+                  <Text style={{ fontSize: 16 }}>SIGN UP</Text>
+                </Button>
+              </View>
             </Form>
           )}
         </Formik>
