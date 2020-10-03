@@ -3,20 +3,20 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import TabHeader from "../../ui/header";
 
-interface homeProps {}
+interface settingsProps {}
 
-const Home: React.FunctionComponent<homeProps> = (props) => {
+const Settings: React.FunctionComponent<settingsProps> = (props) => {
   return (
     <Container>
-      <TabHeader middle={<Title>Home</Title>} />
+      <TabHeader middle={<Title>Settings</Title>} />
       <View style={styles.container}>
-        <Text>Home Screen</Text>
+        <Text>Settings Screen</Text>
       </View>
     </Container>
   );
 };
 
-export default Home;
+export default Settings;
 
 const styles = StyleSheet.create({
   container: {
