@@ -157,7 +157,7 @@ const SignUp: FC<LoginScreenProps> = () => {
                   color="#4F6DE5"
                   disabled={!isValid || !touched || !dirty}
                 >
-                  <Text>SIGN UP</Text>
+                  <Text style={{ fontSize: 20 }}>SIGN UP</Text>
                 </Button>
               ) : (
                 <Spinner color="gray" />
@@ -178,7 +178,7 @@ const SignUp: FC<LoginScreenProps> = () => {
                   transparent
                   onPress={() => navigation.navigate("Login")}
                 >
-                  <Text style={{ fontSize: 16 }}>SIGN IN</Text>
+                  <Text style={{ fontSize: 16 }}>LOGIN</Text>
                 </Button>
               </View>
             </Form>

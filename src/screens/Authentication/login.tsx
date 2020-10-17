@@ -155,7 +155,7 @@ const Login: FC<LoginScreenProps> = () => {
                   onPress={handleSubmit}
                   color="#4F6DE5"
                 >
-                  <Text>SIGN IN</Text>
+                  <Text style={{ fontSize: 20 }}>LOGIN</Text>
                 </Button>
               ) : (
                 <Spinner color="gray" />
